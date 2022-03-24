@@ -19,10 +19,10 @@ node_repositories()
 
 http_archive(
     name = "rules_rust",
-    sha256 = "c24b81af7899e1b72c59b695aa58028c1044488457831090cfc23b3b69ee3ef4",
-    strip_prefix = "rules_rust-ea22478f6dac4604b4ef38fb8e713cd1c0880084",
+    sha256 = "c9478810c5e2ab1e19bb830b1d8284736b9a6395b96ce914c8ac5ce8d1368d0d",
+    strip_prefix = "rules_rust-41b39f0c9951dfda3bd0a95df31695578dd3f5ea",
     urls = [
-        "https://github.com/bazelbuild/rules_rust/archive/ea22478f6dac4604b4ef38fb8e713cd1c0880084.tar.gz",
+        "https://github.com/bazelbuild/rules_rust/archive/41b39f0c9951dfda3bd0a95df31695578dd3f5ea.tar.gz",
     ],
 )
 
@@ -33,10 +33,10 @@ rust_repositories(
     version = "1.58.0",
 )
 
-load("//rust/cargo:crates.bzl", fetch_remote_crates = "remote_build_dependencies_fetch_remote_crates")
-
-fetch_remote_crates()
-
 load("@rules_rust//wasm_bindgen:repositories.bzl", "rust_wasm_bindgen_repositories")
 
 rust_wasm_bindgen_repositories()
+
+load("//rust/cargo:crates.bzl", fetch_remote_crates = "remote_build_dependencies_fetch_remote_crates")
+
+fetch_remote_crates()
