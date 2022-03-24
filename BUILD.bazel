@@ -20,8 +20,8 @@ load("@rules_rust//wasm_bindgen:wasm_bindgen.bzl", "rust_wasm_bindgen")
 package(default_visibility = ["//visibility:public"])
 
 nodejs_binary(
-    name = "hello-bin",
-    data = [":hello_world_nodejs_wasm_bindgen"],
+    name = "hello_bin",
+    data = [":hello_wasm_bindgen"],
     entry_point = "hello-bin.js",
 )
 
@@ -34,20 +34,20 @@ rust_shared_library(
 )
 
 rust_wasm_bindgen(
-    name = "hello_world_nodejs_wasm_bindgen",
+    name = "hello_wasm_bindgen",
     target = "nodejs",
     wasm_file = ":hello_world_lib_wasm",
 )
 
 genrule(
-    name = "hello-gen",
+    name = "hello_gen",
     outs = ["test.txt"],
     cmd =
         """
 #!/bin/bash
 set -euo pipefail
-binary="$(location //:hello-bin)"
+binary="$(location //:hello_bin)"
 exec "$$binary" > $(OUTS) 
 """,
-    tools = ["//:hello-bin"],
+    tools = ["//:hello_bin"],
 )
