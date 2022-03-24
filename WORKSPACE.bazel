@@ -1,0 +1,42 @@
+workspace(name = "wasm-repro-genrule")
+
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+    name = "build_bazel_rules_nodejs",
+    sha256 = "3ceb1e5b5dcad5fa2ad8870a20201cfbb9c9c63cac4055c9ab370034c765297f",
+    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/5.3.0/rules_nodejs-5.3.0.tar.gz"],
+)
+
+load("@build_bazel_rules_nodejs//:repositories.bzl", "build_bazel_rules_nodejs_dependencies")
+
+build_bazel_rules_nodejs_dependencies()
+
+# fetches nodejs, npm, and yarn
+load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories")
+
+node_repositories()
+
+http_archive(
+    name = "rules_rust",
+    sha256 = "c24b81af7899e1b72c59b695aa58028c1044488457831090cfc23b3b69ee3ef4",
+    strip_prefix = "rules_rust-ea22478f6dac4604b4ef38fb8e713cd1c0880084",
+    urls = [
+        "https://github.com/bazelbuild/rules_rust/archive/ea22478f6dac4604b4ef38fb8e713cd1c0880084.tar.gz",
+    ],
+)
+
+load("@rules_rust//rust:repositories.bzl", "rust_repositories")
+
+rust_repositories(
+    edition = "2021",
+    version = "1.58.0",
+)
+
+load("//rust/cargo:crates.bzl", fetch_remote_crates = "remote_build_dependencies_fetch_remote_crates")
+
+fetch_remote_crates()
+
+load("@rules_rust//wasm_bindgen:repositories.bzl", "rust_wasm_bindgen_repositories")
+
+rust_wasm_bindgen_repositories()
