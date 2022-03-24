@@ -46,7 +46,6 @@ genrule(
         """
 #!/bin/bash
 set -euo pipefail
-cd "$$BUILD_WORKSPACE_DIRECTORY"
 binary="$(location //:hello-bin)"
 exec "$$binary" > $(OUTS) 
 """,
